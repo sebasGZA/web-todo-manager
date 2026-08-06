@@ -1,0 +1,50 @@
+<div class="page">
+  <header class="page__header">
+    <div>
+      <h1>Tareas</h1>
+      <p class="page__subtitle">Crea, edita y elimina tus tareas.</p>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="openCreateForm()">+ Nueva tarea</button>
+  </header>
+
+  @if (loading()) {
+    <div class="state-panel">
+      <p>Cargando tareas...</p>
+    </div>
+  } @else if (loadError()) {
+    <div class="state-panel state-panel--error">
+      <p>{{ loadError()!.message }}</p>
+      <button type="button" class="btn btn-secondary btn-sm" (click)="loadTasks()">Reintentar</button>
+    </div>
+  } @else {
+    <div class="task-grid">
+      @for (task of tasks(); track task.id) {
+        <app-task-item
+          [task]="task"
+          (edit)="openEditForm($event)"
+          (remove)="requestDelete($event)"
+        ></app-task-item>
+      }
+    </div>
+  }
+</div>
+
+@if (showForm()) {
+  <app-task-form
+    [task]="editingTask()"
+    [saving]="saving()"
+    [serverError]="formError()"
+    (submitted)="handleFormSubmit($event)"
+    (cancelled)="closeForm()"
+  ></app-task-form>
+}
+
+@if (taskPendingDelete(); as task) {
+  <app-confirm-dialog
+    title="Eliminar tarea"
+    [message]="'¿Seguro que deseas eliminar &quot;' + task.title + '&quot;? Esta acción no se puede deshacer.'"
+    [loading]="deleting()"
+    (confirmed)="confirmDelete()"
+    (cancelled)="cancelDelete()"
+  ></app-confirm-dialog>
+}

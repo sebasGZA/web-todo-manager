@@ -1,0 +1,14 @@
+<div class="overlay" (click)="cancelled.emit()">
+  <div class="dialog" (click)="$event.stopPropagation()" role="alertdialog" aria-modal="true">
+    <h3 class="dialog__title">{{ title }}</h3>
+    <p class="dialog__message">{{ message }}</p>
+    <div class="dialog__actions">
+      <button type="button" class="btn btn-secondary" (click)="cancelled.emit()" [disabled]="loading">
+        {{ cancelLabel }}
+      </button>
+      <button type="button" class="btn btn-danger" (click)="confirmed.emit()" [disabled]="loading">
+        {{ loading ? 'Eliminando...' : confirmLabel }}
+      </button>
+    </div>
+  </div>
+</div>
