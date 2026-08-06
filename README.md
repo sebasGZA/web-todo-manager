@@ -8,7 +8,8 @@ Instalaciones necesarias:
 
 - Git (>= v2.43.0)
 - Node.js (>= v24.15.0)
-- pnpm (>= 11.20.0)
+- Nestjs (>= 11.0.24)
+- Pnpm (>= 11.20.0)
 - Docker (>= 29.5.1)
 - Angular CLI (>= 22.0.4)
 
@@ -42,6 +43,8 @@ pnpm install
 ## 🐳 Docker 
 Instalar docker https://docs.docker.com/engine/install
 ### Crear contenedor de base de datos
+
+Dentro del proyecto de backend correr el siguiente comando
 ```bash
 docker compose up -d
 ```
@@ -68,8 +71,6 @@ http://localhost:4200/
 
 * Se implementó arquitectura hexagonal que esta basado en la inversión de dependencias y con el patrón de puerto/adaptadores para la separar por capas y la lógica de negoció de agentes externos
 
-* Se realizo una estructura simple en el manejo de carpetas, pero utilizando la estrategia standalone y separación de pagina por componentes debido a que es un proyecto pequeño.
-
 * Se implemento una estrategia de auth con token basico para agregar seguridad a las peticiones que se van a generar.
 
 * Decidi utilizar scss y no un framework de diseño para no generar dependencias dentro de la aplicación. Igualmente los mensajes o alertas que se generan en la aplicación creando un componente propio y un servicio para la propagación de estas.
@@ -78,12 +79,14 @@ http://localhost:4200/
 
 Gracias al framework de NestJS se maneja una estructura modular y se separa cada modulo por 3 carpetas principales como domain, application e infrastructure
 
+## Estructura de carpetas del frontend
+
+Se realizo una estructura simple en el manejo de carpetas separando el modelo, los servicios y los interceptores, utilizando la estrategia standalone debido a que es un proyecto pequeño.
+
 ## Funcionalidades implementadas (incluyendo puntos extra si aplica)
-- Indicadores de loading durante peticiones HTTP
 - Mensajes de confirmación antes de eliminar
 - Mensajes de éxito/error amigables al usuario
 - Variables de entorno (.env) para configuración (puerto, URL base API)
-- Ejemplos de request/response en README o comentarios JSDoc
 - Uso de modales para crear/editar tareas
 - Tests unitarios (backend: controladores/servicios o frontend: componentes/servicios)
 - Autenticación básica (mock token o simple validación en headers)
