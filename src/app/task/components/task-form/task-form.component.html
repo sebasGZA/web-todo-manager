@@ -1,0 +1,61 @@
+<div class="overlay" (click)="cancelled.emit()">
+  <form class="form-card" [formGroup]="form" (ngSubmit)="onSubmit()" (click)="$event.stopPropagation()">
+    <h3 class="form-card__title">{{ task ? 'Editar tarea' : 'Nueva tarea' }}</h3>
+
+    @if (serverError) {
+      <div class="form-error-banner">{{ serverError }}</div>
+    }
+
+    <div class="field">
+      <label for="title">Título</label>
+      <input
+        id="title"
+        type="text"
+        formControlName="title"
+        placeholder="Ej: Preparar entrega semanal"
+        [class.invalid]="title.invalid && title.touched"
+      />
+      @if (title.invalid && title.touched) {
+        <span class="field-error">
+          @if (title.errors?.['required']) { El título es obligatorio. }
+          @if (title.errors?.['minlength']) { Debe tener al menos 3 caracteres. }
+          @if (title.errors?.['maxlength']) { No puede superar 80 caracteres. }
+        </span>
+      }
+    </div>
+
+    <div class="field">
+      <label for="description">Descripción</label>
+      <textarea
+        id="description"
+        rows="4"
+        formControlName="description"
+        placeholder="Describe brevemente la tarea"
+        [class.invalid]="description.invalid && description.touched"
+      ></textarea>
+      @if (description.invalid && description.touched) {
+        <span class="field-error">
+          @if (description.errors?.['maxlength']) { No puede superar 500 caracteres. }
+        </span>
+      }
+    </div>
+
+    <div class="field">
+      <label for="status">Estado</label>
+      <select id="status" formControlName="status">
+        @for (opt of statusOptions; track opt) {
+          <option [value]="opt">{{ statusLabels[opt] }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-card__actions">
+      <button type="button" class="btn btn-secondary" (click)="cancelled.emit()" [disabled]="saving">
+        Cancelar
+      </button>
+      <button type="submit" class="btn btn-primary" [disabled]="saving">
+        {{ saving ? 'Guardando...' : (task ? 'Guardar cambios' : 'Crear tarea') }}
+      </button>
+    </div>
+  </form>
+</div>

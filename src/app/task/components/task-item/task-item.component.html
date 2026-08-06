@@ -1,0 +1,27 @@
+<article class="task-card">
+  <div class="task-card__header">
+    <h4 class="task-card__title">{{ task.title }}</h4>
+    <app-status-badge [status]="task.status"></app-status-badge>
+  </div>
+
+  <p class="task-card__description">{{ task.description }}</p>
+
+  <div class="task-card__footer">
+    <span class="task-card__date">
+      @if(!task.updatedAt){
+        Creada: {{ task.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+      } @else {
+        Actualizada: {{ task.updatedAt | date: 'dd/MM/yyyy HH:mm' }}
+      }
+    </span>
+
+    <div class="task-card__actions">
+      <button type="button" class="btn btn-secondary btn-sm" (click)="edit.emit(task)">
+        Editar
+      </button>
+      <button type="button" class="btn btn-danger btn-sm" (click)="remove.emit(task)">
+        Eliminar
+      </button>
+    </div>
+  </div>
+</article>
